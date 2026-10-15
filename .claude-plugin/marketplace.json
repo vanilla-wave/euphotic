@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "euphotic",
+  "description": "vanilla-wave's personal skills marketplace",
+  "owner": { "name": "vanilla-wave" },
+  "plugins": [
+    {
+      "name": "euphotic",
+      "description": "vanilla-wave's personal agent skills.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

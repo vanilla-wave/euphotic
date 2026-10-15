@@ -1,0 +1,138 @@
+#!/usr/bin/env python3 -I
+"""Lint the plugin: skill frontmatter, portability, manifest consistency, generated files.
+Exit 1 on errors; warnings do not fail. Runs `claude plugin validate .` when available."""
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _skills import (GENERATED_MARK, REPO, SKILLS, parse_frontmatter,  # noqa: E402
+                     render_openai_yaml, skill_dirs)
+
+NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+NON_PORTABLE = re.compile(r"~/\.(claude|agents|codex|cursor)/skills/|\$\{?CLAUDE_(PLUGIN_ROOT|SKILL_DIR)")
+SHARED_REF = re.compile(r"\.\./\.\./shared/([A-Za-z0-9_./-]+)")
+errors, warnings = [], []
+
+
+def err(msg):
+    errors.append(msg)
+
+
+def warn(msg):
+    warnings.append(msg)
+
+
+def check_manifests():
+    names = {}
+    for rel in ("plugin.json", ".claude-plugin/plugin.json", ".cursor-plugin/plugin.json"):
+        p = REPO / rel
+        if not p.exists():
+            err(f"missing manifest {rel}")
+            continue
+        names[rel] = json.loads(p.read_text()).get("name")
+    for rel, key in ((".claude-plugin/marketplace.json", "name"),
+                     (".agents/plugins/marketplace.json", "name"),
+                     (".cursor-plugin/marketplace.json", "name")):
+        p = REPO / rel
+        if not p.exists():
+            err(f"missing marketplace {rel}")
+            continue
+        mp = json.loads(p.read_text())
+        entries = mp.get("plugins", [])
+        if len(entries) != 1:
+            err(f"{rel}: expected exactly one plugin entry, got {len(entries)}")
+        else:
+            names[rel + "#plugin"] = entries[0].get("name")
+        names[rel + "#marketplace"] = mp.get("name")
+    if len(set(names.values())) != 1:
+        err("plugin/marketplace names differ: " + json.dumps(names, indent=1))
+    else:
+        print(f"manifests: name={next(iter(names.values()))!r} consistent across {len(names)} places")
+
+
+def check_tree():
+    for p in REPO.rglob("*"):
+        if ".git" in p.parts:
+            continue
+        if p.is_symlink():
+            err(f"symlink not allowed (Codex drops them): {p.relative_to(REPO)}")
+        if p.name == "SKILL.md":
+            rel = p.relative_to(REPO)
+            if not (len(rel.parts) == 3 and rel.parts[0] == "skills"):
+                err(f"SKILL.md outside skills/<name>/: {rel} (Codex would register it as a skill)")
+
+
+def check_skills():
+    seen = set()
+    for d in skill_dirs():
+        rel = d.relative_to(REPO)
+        sk = d / "SKILL.md"
+        if not sk.exists():
+            err(f"{rel}: no SKILL.md")
+            continue
+        text = sk.read_text()
+        fm, perr = parse_frontmatter(text)
+        if perr:
+            err(f"{rel}: {perr}")
+            continue
+        name, desc = fm.get("name", ""), fm.get("description", "")
+        if name != d.name:
+            err(f"{rel}: frontmatter name {name!r} != directory name")
+        if not NAME_RE.match(name) or len(name) > 64:
+            err(f"{rel}: name must be lowercase a-z0-9 with hyphens, <=64 chars")
+        if name in seen:
+            err(f"{rel}: duplicate skill name")
+        seen.add(name)
+        if not desc:
+            err(f"{rel}: empty description")
+        elif len(desc) > 1024:
+            err(f"{rel}: description {len(desc)} chars > 1024 (spec limit)")
+        n_lines = text.count("\n") + 1
+        if n_lines > 500:
+            warn(f"{rel}: SKILL.md has {n_lines} lines (> 500 recommended); move detail to references/")
+        for m in NON_PORTABLE.finditer(text):
+            warn(f"{rel}: non-portable path {m.group(0)!r} - use ../../shared/ or paths relative to the skill dir")
+        for m in SHARED_REF.finditer(text):
+            if not (REPO / "shared" / m.group(1)).exists():
+                err(f"{rel}: references missing shared file shared/{m.group(1)}")
+        gen = d / "agents" / "openai.yaml"
+        if not gen.exists():
+            err(f"{rel}: missing agents/openai.yaml - run bin/build")
+        elif GENERATED_MARK in gen.read_text() and gen.read_text() != render_openai_yaml(fm):
+            err(f"{rel}: agents/openai.yaml out of date - run bin/build")
+    print(f"skills: {len(seen)} checked")
+
+
+def check_claude_validate():
+    if not shutil.which("claude"):
+        warn("claude not in PATH - skipped `claude plugin validate .`")
+        return
+    r = subprocess.run(["claude", "plugin", "validate", "."], cwd=REPO, capture_output=True, text=True)
+    out = (r.stdout + r.stderr).strip()
+    if r.returncode != 0:
+        err("claude plugin validate failed:\n" + out)
+    else:
+        print("claude plugin validate: ok" + (f"\n{out}" if out else ""))
+
+
+def main():
+    os.chdir(REPO)
+    check_manifests()
+    check_tree()
+    check_skills()
+    check_claude_validate()
+    for w in warnings:
+        print("WARN", w)
+    for e in errors:
+        print("ERR ", e)
+    print(f"{len(errors)} error(s), {len(warnings)} warning(s)")
+    sys.exit(1 if errors else 0)
+
+
+if __name__ == "__main__":
+    main()

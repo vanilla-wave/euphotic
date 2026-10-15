@@ -1,0 +1,33 @@
+#!/usr/bin/env python3 -I
+"""Generate skills/<name>/agents/openai.yaml (Codex metadata) from SKILL.md frontmatter.
+A hand-written openai.yaml (without the generated marker) is left untouched."""
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _skills import GENERATED_MARK, parse_frontmatter, render_openai_yaml, skill_dirs  # noqa: E402
+
+
+def main():
+    changed = 0
+    for d in skill_dirs():
+        fm, err = parse_frontmatter((d / "SKILL.md").read_text())
+        if err:
+            print(f"skip {d.name}: {err}", file=sys.stderr)
+            continue
+        target = d / "agents" / "openai.yaml"
+        if target.exists() and GENERATED_MARK not in target.read_text():
+            print(f"keep  {d.name}: hand-written agents/openai.yaml")
+            continue
+        new = render_openai_yaml(fm)
+        if target.exists() and target.read_text() == new:
+            continue
+        target.parent.mkdir(exist_ok=True)
+        target.write_text(new)
+        changed += 1
+        print(f"write {target.relative_to(d.parent.parent)}")
+    print(f"done: {changed} file(s) written")
+
+
+if __name__ == "__main__":
+    main()

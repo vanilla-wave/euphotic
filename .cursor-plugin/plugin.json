@@ -1,0 +1,9 @@
+{
+  "name": "euphotic",
+  "displayName": "euphotic",
+  "description": "vanilla-wave's personal agent skills (shared by Claude Code, Codex and Cursor).",
+  "author": { "name": "vanilla-wave" },
+  "repository": "https://github.com/vanilla-wave/euphotic",
+  "license": "MIT",
+  "skills": "./skills/"
+}

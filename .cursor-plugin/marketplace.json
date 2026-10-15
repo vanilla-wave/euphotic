@@ -1,0 +1,12 @@
+{
+  "name": "euphotic",
+  "owner": { "name": "vanilla-wave" },
+  "metadata": { "description": "vanilla-wave's personal skills marketplace" },
+  "plugins": [
+    {
+      "name": "euphotic",
+      "description": "vanilla-wave's personal agent skills.",
+      "source": "."
+    }
+  ]
+}
