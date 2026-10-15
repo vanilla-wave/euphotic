@@ -21,6 +21,19 @@ process layer, high agent autonomy, intent-driven - and every skill here is judg
   relative to the skill directory - never as a hidden skill the agent is told to invoke.
   Mechanics and the portable frontmatter subset: `shared/CONVENTIONS.md`.
 
+## Changing a skill
+
+When a skill misbehaves, the fix is almost never one more sentence.
+
+- **Root cause, not symptom.** "The agent skipped step 3" is a symptom. The cause is usually a
+  priority that was never stated, a step that should not exist, or two instructions pulling in
+  opposite directions. Find it and fix that; do not bolt on a reminder.
+- **Subtract before you add.** Try removing, merging or rewording first. A skill that grows with
+  every incident is accumulating patches, not improving.
+- **A pile of patches is a design smell** - same as in code. When the third fix lands in the same
+  place, the design is wrong one level up: the skill's scope, the split between skills, or the
+  shared procedure. Redesign there instead of adding the next patch.
+
 ## Before you finish
 
 - `bin/build` regenerates `skills/*/agents/openai.yaml`; `bin/check` lints. Both must pass and the
