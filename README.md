@@ -18,7 +18,7 @@ changes, matters of taste - and nowhere else.
 
 **Intent-driven.** A skill says what matters, not what to type: priorities in order, what "good"
 looks like, the trade-offs to make under pressure, and the few things never to do. Everything else
-is left to judgment. When a literal instruction and a stated priority conflict, the priority wins.
+is left to judgment.
 
 ## Connect
 
