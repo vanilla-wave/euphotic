@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/icon.png" alt="euphotic — a thin sunlit layer above ocean depths" width="256" height="256">
+</p>
+
 # euphotic
 
 Personal agent skills for **Claude Code**, **Codex** and **Cursor**, shipped as one plugin.

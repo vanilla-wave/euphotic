@@ -5,5 +5,6 @@
   "author": { "name": "vanilla-wave" },
   "repository": "https://github.com/vanilla-wave/euphotic",
   "license": "MIT",
+  "logo": "assets/icon.png",
   "skills": "./skills/"
 }
