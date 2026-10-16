@@ -6,12 +6,17 @@ process layer, high agent autonomy, intent-driven - and every skill here is judg
 
 ## Writing a skill
 
-- **Say what matters, not what to type.** Ordered priorities, what good looks like, the trade-offs,
-  the few hard limits. Leave the method to the agent; it is better at choosing it in context than
-  you are at predicting the context.
-- **Assume competence.** Do not spell out steps a capable agent can derive, do not add confirmation
-  prompts, do not ask it to report back between steps. State a default instead, and name the real
-  decision points where a human must be asked.
+- **Exact about two things, intent about everything else.** Exact: facts the agent cannot derive
+  (commands, flags, field names, IDs, paths, status strings, the output contract, the vocabulary
+  of verdicts and categories) and actions it cannot undo (gates before writes, read-only defaults,
+  the few hard limits). Everything else is intent: priorities in order, what good looks like, and
+  a completion criterion - "done when ..." - instead of a list of steps. Order only where a
+  dependency or an irreversible action forces it.
+- **The test for a step.** Could a competent agent, given the facts and the completion criterion,
+  derive it? Then delete it. If not, it is a fact, a limit, or a forced order - write it as that,
+  and say why the order is forced ("schema before call: the names are not guessable").
+- **Leave the decisions to the agent.** No confirmation prompts, no reporting back between steps.
+  State a default instead, and name the real decision points where a human must be asked.
 - **Keep it short.** One job per skill. If `SKILL.md` needs more than a screen to explain the job,
   it is two skills, or the detail belongs in `references/` and is read on demand.
 - **Hard limits are few and up front.** Every `never` and `always` costs attention and compaction

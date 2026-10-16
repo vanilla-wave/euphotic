@@ -20,9 +20,13 @@ what a competent agent can work out, do not ask for confirmation mid-task, and s
 work never stalls. Humans are pulled in at real decision points - irreversible actions, scope
 changes, matters of taste - and nowhere else.
 
-**Intent-driven.** A skill says what matters, not what to type: priorities in order, what "good"
-looks like, the trade-offs to make under pressure, and the few things never to do. Everything else
-is left to judgment.
+**Intent-driven.** A skill is exact about two things only: facts the agent cannot derive -
+commands, flags, field names, IDs, paths, status strings, the shape of the output - and actions it
+cannot undo - the gate before a write, the read-only default, the few things never to do.
+Everything else is intent, written in three parts: priorities in order, what "good" looks like,
+and a completion criterion - what *done* means, not how to get there. Steps appear only where a
+dependency or an irreversible action forces the order. A wrapper around a CLI or an API is mostly
+facts and is exact throughout; a process skill is mostly intent.
 
 ## Connect
 
