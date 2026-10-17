@@ -2,8 +2,9 @@
 
 Two different things live in this repo, and they should not be confused:
 
-- **Principles** (`README.md`, `AGENTS.md`) are about the *content* of a skill - what it asks of the
-  agent. They are deliberately loose: priorities and reference points, not rules.
+- **Principles** (`README.md`; in operative form, the `writing-great-skills` skill) are about the
+  *content* of a skill - what it asks of the agent. They are deliberately loose: priorities and
+  reference points, not rules.
 - **Conventions** (this file; the items marked (!) are enforced by `bin/check`) are about *packaging*:
   what the three runtimes - Claude Code, Codex, Cursor - can and cannot load. These are mechanical,
   because a violation silently breaks one of the agents rather than making a skill slightly worse.

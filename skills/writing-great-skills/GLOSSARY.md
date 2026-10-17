@@ -1,6 +1,6 @@
 # Glossary — Building Great Skills
 
-The domain model for what makes a skill great. A skill exists to wrangle determinism out of a stochastic system; the root virtue is **Predictability**, and every term below is a lever on it. This is the disclosed reference for [`writing-great-skills`](SKILL.md).
+The domain model for what makes a skill great. A skill exists so that the agent lands where you would have landed, by its own route; the root virtue is **Predictability**, and every term below is a lever on it. This is the disclosed reference for [`writing-great-skills`](SKILL.md).
 
 The terms are grouped by axis: **Invocation** (how a skill is reached), **Information Hierarchy** (how its content is arranged), **Steering** (how the agent's runtime behaviour is shaped), and **Pruning** (how it is kept lean). Each **failure mode** lives beside the lever that cures it, tagged _failure mode_.
 
@@ -8,9 +8,9 @@ The terms are grouped by axis: **Invocation** (how a skill is reached), **Inform
 
 ## Predictability
 
-The degree to which a skill makes the agent behave the same _way_ on every run — the same process, not the same output (a brainstorming skill should _predictably_ diverge; its tokens vary, its behaviour doesn't). The root virtue every other term serves — cost and maintainability are symptoms of it, not rivals.
+The degree to which a skill makes the agent reach the same _judgment_ on every run — the same calls, not the same route and not the same output (a brainstorming skill should _predictably_ diverge; its tokens vary, its priorities don't). Sameness of route is not the goal: a skill that scripts the route has traded the agent's judgment for choreography, and pays for it in **over-scripting**. The root virtue every other term serves — cost and maintainability are symptoms of it, not rivals.
 
-_Avoid_: consistency, reliability, robustness, output-determinism
+_Avoid_: consistency, reliability, robustness, output-determinism, process-determinism
 
 ## Invocation
 
@@ -70,19 +70,37 @@ How a skill's content is arranged, and how far down the ladder each piece sits.
 
 ### Information Hierarchy
 
-A skill's content ranked by how immediately the agent needs it — a single ladder, produced by two cuts: in-file or behind a pointer, and step or reference. The rungs:
+A skill's content ranked by how immediately the agent needs it — a single ladder, produced by two cuts: in-file or behind a pointer, and **intent** or **reference**. The rungs:
 
-- **Steps** — in-file, primary
+- **Intent** — in-file, primary: priorities, what good looks like, the **completion criterion**, and the few **steps** whose order is forced
 - **Reference**, in-file — secondary
 - **Reference**, disclosed — behind a **context pointer**
 
-A skill with no **steps** uses just the bottom two rungs — often a legitimately flat peer-set (e.g. every rule of a review on one rung), which is a fine arrangement, not a smell. The hierarchy is independent of invocation: a skill can be model- or user-invoked whether it is all steps, all reference, or both. When a skill has steps, in-file reference that should be disclosed buries them and turns attending to them into a coin-flip — a variance lever, not just a legibility one. Keep the top of the ladder legible; push down it whatever you can.
+A skill with no **process** content uses just the bottom two rungs — often a legitimately flat peer-set (e.g. every rule of a review on one rung), which is a fine arrangement, not a smell. The hierarchy is independent of invocation: a skill can be model- or user-invoked whether it is all intent, all reference, or both. When a skill has process content, in-file reference that should be disclosed buries it and turns attending to it into a coin-flip — a variance lever, not just a legibility one. Keep the top of the ladder legible; push down it whatever you can.
 
 _Avoid_: structure, organization, layout
 
+### Process
+
+Content about how the work proceeds — the part of a skill that shapes what the agent does rather than what it knows. Written as **intent**; it becomes **steps** only where order is forced. A skill can be all process (`tdd`), all **reference** (a review), an **interface**, or a mix, independent of invocation.
+
+_Avoid_: workflow, procedure, choreography
+
+### Interface
+
+Content about how to drive a tool — commands, flags, field names, IDs, paths, status strings, the shape of a request or an output. Exact throughout: none of it can be derived, and a guess costs a round trip or a wrong write. The one kind of content where precision is the whole point; a wrapper around a CLI or an API is mostly interface.
+
+_Avoid_: usage, cheat sheet, API notes
+
+### Intent
+
+The form process content takes: **priorities** in order (what wins when things conflict), **what good looks like** (an example or contrast the agent can recognise the target by), and a **completion criterion** (what done means). It states where to land and leaves the route to the agent; the three together replace a list of steps. The root rule that bounds it: be exact about facts the agent cannot derive and about actions it cannot undo — everything else is intent.
+
+_Avoid_: guidelines, philosophy, spirit
+
 ### Steps
 
-The ordered actions the agent performs — when a skill has them, the primary tier of its content, and the part that earns its place in SKILL.md. Not every skill has steps: a skill can be all steps (`tdd`), all **reference** (a review), or both, independent of invocation. Every step ends on a **completion criterion**, clear or vague.
+The ordered actions a skill spells out. Not the default form of **process** content: a step survives only where its order is forced — by a dependency (schema before call) or by an irreversible action (triage, then the gate, then the browser) — and says why. A step the agent could derive from the facts and the **completion criterion** is **over-scripting**; one that exists to reassure a human is **ceremony**. Every step that survives ends on a completion criterion, clear or vague.
 
 _Avoid_: workflow, instructions, choreography
 
@@ -136,7 +154,7 @@ _Avoid_: keyword, term, motif
 
 ### Completion Criterion
 
-The condition that tells the agent a unit of work is done — the target it judges against. Two properties make it a lever, not just a quality. Its **clarity** (can the agent tell done from not-done?) resists **premature completion** — a vague bound ("understanding reached") lets the agent declare done and slip to the next step; this axis needs _steps_ to bite, since premature completion is a between-steps failure. Its **demand** (how much it requires) sets **legwork** — "every modified model accounted for" forces thorough work where "produce a change list" does not — and this axis is _not_ step-bound: it can bind a body of flat reference too, which is how a skill with no steps still carries an exhaustiveness bar ("every rule applied"). The strongest criteria are both checkable and exhaustive.
+The condition that tells the agent a unit of work is done — the target it judges against. In **process** content it is the primary device: it states what done is without stating how, so the agent chooses the route — the replacement for a list of steps. Two properties make it a lever, not just a quality. Its **clarity** (can the agent tell done from not-done?) resists **premature completion** — a vague bound ("understanding reached") lets the agent declare done and slip to the next step; this axis needs _steps_ to bite, since premature completion is a between-steps failure. Its **demand** (how much it requires) sets **legwork** — "every modified model accounted for" forces thorough work where "produce a change list" does not — and this axis is _not_ step-bound: it can bind a body of flat reference too, which is how a skill with no steps still carries an exhaustiveness bar ("every rule applied"). The strongest criteria are both checkable and exhaustive.
 
 _Avoid_: done condition, exit condition, stopping rule
 
@@ -151,6 +169,18 @@ _Avoid_: scope, effort, diligence, coverage
 The **steps** that follow the current step. Visible, they pull the agent forward into **premature completion** — the more it sees, the stronger the tug; the defence is to hide them by splitting the sequence of steps into two.
 
 _Avoid_: horizon, fog of war, lookahead
+
+### Over-Scripting
+
+_Failure mode._ Steps the agent would have derived on its own from the facts and the **completion criterion** — the **no-op** at the scale of a procedure. It costs tokens and attention, and it takes the route out of the agent's hands exactly where its judgment was the point; a scripted route also breaks differently from a derived one, because the agent follows it past the case it was written for. The test for every step: could a competent agent, given the facts and the criterion, derive it? Then delete it. What survives is a fact, a limit, or a forced order — written as that.
+
+_Avoid_: micromanagement, step-by-step, hand-holding
+
+### Ceremony
+
+_Failure mode._ A step that exists to reassure a human rather than to change the outcome: a confirmation with nothing irreversible behind it, a report-back between steps, a stage gate for its own sake, a checklist nobody reads. The cost is paid every run, in turns and in the agent's autonomy. Replace with a stated default and a named decision point — the real place a human must be asked, usually an irreversible action or a matter of taste.
+
+_Avoid_: bureaucracy, process for its own sake, rigour theatre
 
 ### Premature Completion
 
@@ -182,9 +212,15 @@ _Avoid_: load-bearing, staleness, freshness
 
 ### Sediment
 
-_Failure mode._ Layers of old content that settle in a skill and are never cleared, because adding feels safe and removing feels risky — so stale and irrelevant lines accumulate and you must core down through them to find what is still live. The default fate of any skill without a pruning discipline; the slow erosion of **relevance**, as opposed to **duplication**'s repeated meaning.
+_Failure mode._ Layers of old content that settle in a skill and are never cleared, because adding feels safe and removing feels risky — so stale and irrelevant lines accumulate and you must core down through them to find what is still live. The default fate of any skill without a pruning discipline; the slow erosion of **relevance**, as opposed to **duplication**'s repeated meaning. The discipline that prevents it: subtract before you add — remove, merge or reword before writing a new line.
 
 _Avoid_: accretion, bloat, cruft, rot
+
+### Patch Pile
+
+_Failure mode._ The same place in a skill fixed again and again — each incident adding a `never`, a reminder, a special case — until the clauses outnumber the content. Not a pruning problem: the third fix in one place says the design is wrong one level up — the skill's scope, the split between skills, a shared procedure, or a mechanism that belongs in a helper script rather than in prose. Redesign there; do not add the next patch. The diagnostic that precedes it: a misbehaviour is a symptom, and the cause is usually a priority never stated, a step that should not exist, or two instructions pulling against each other.
+
+_Avoid_: band-aids, guard clauses, defensive prose
 
 ### No-Op
 

@@ -28,6 +28,9 @@ and a completion criterion - what *done* means, not how to get there. Steps appe
 dependency or an irreversible action forces the order. A wrapper around a CLI or an API is mostly
 facts and is exact throughout; a process skill is mostly intent.
 
+The operative version of all three - how a skill is written, judged and changed - is the
+`writing-great-skills` skill in this repo.
+
 ## Connect
 
 The repo root is both the marketplace and the single plugin `euphotic`. There is no `version`
@@ -88,7 +91,7 @@ codex plugin marketplace add /path/to/euphotic && codex plugin add euphotic@euph
 
 ## Develop
 
-- `AGENTS.md` - how skills are written here (the principles, applied).
+- `AGENTS.md` - repo rules: where things live, what to run before you finish.
 - `shared/CONVENTIONS.md` - the portable frontmatter subset and how skills share procedures.
 - `bin/build` - regenerates `skills/*/agents/openai.yaml` (Codex metadata) from frontmatter. Commit the output.
 - `bin/check` - lint: frontmatter, portability, manifest consistency, `claude plugin validate`.
