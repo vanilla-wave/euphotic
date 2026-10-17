@@ -62,13 +62,6 @@ codex plugin marketplace add .
 ```
 </details>
 
-## Develop
-
-- `AGENTS.md` - repo rules. `shared/CONVENTIONS.md` - packaging and the portable frontmatter subset.
-- `bin/build` - regenerates `skills/*/agents/openai.yaml` (Codex metadata); commit the output.
-- `bin/check` - lint + `claude plugin validate`.
-- `docs/research/` - why it is built this way.
-
 ## Layout
 
 ```
