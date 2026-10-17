@@ -2,7 +2,7 @@
 
 Two different things live in this repo, and they should not be confused:
 
-- **Principles** (`README.md`; in operative form, the `writing-great-skills` skill) are about the
+- **Principles** (`README.md`; in operative form, the `skill-creator` skill) are about the
   *content* of a skill - what it asks of the agent. They are deliberately loose: priorities and
   reference points, not rules.
 - **Conventions** (this file; the items marked (!) are enforced by `bin/check`) are about *packaging*:

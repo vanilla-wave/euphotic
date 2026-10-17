@@ -29,7 +29,7 @@ dependency or an irreversible action forces the order. A wrapper around a CLI or
 facts and is exact throughout; a process skill is mostly intent.
 
 The operative version of all three - how a skill is written, judged and changed - is the
-`writing-great-skills` skill in this repo.
+`skill-creator` skill in this repo.
 
 ## Connect
 

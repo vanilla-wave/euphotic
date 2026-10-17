@@ -6,7 +6,7 @@ in - thin process layer, high agent autonomy, intent-driven.
 
 ## Writing or changing a skill
 
-Read `skills/writing-great-skills/SKILL.md` first (the user invokes it as `/writing-great-skills`).
+Read `skills/skill-creator/SKILL.md` first (the user invokes it as `/skill-creator`).
 It is the single source of truth for how a skill is written, judged and changed here.
 
 Material shared by several skills lives in `shared/`, referenced as `../../shared/<path>` relative

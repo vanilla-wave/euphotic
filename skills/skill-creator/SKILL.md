@@ -1,5 +1,5 @@
 ---
-name: writing-great-skills
+name: skill-creator
 description: Reference for writing, editing and reviewing skills — what to be exact about, what to leave to the agent, and the vocabulary that makes a skill predictable.
 disable-model-invocation: true
 license: MIT
