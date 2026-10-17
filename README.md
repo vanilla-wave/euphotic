@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/icon.png" alt="euphotic — a thin sunlit layer above ocean depths" width="256" height="256">
+</p>
+
 # euphotic
 
 Personal agent skills for Claude Code, Codex and Cursor, shipped as one plugin.
@@ -61,15 +65,3 @@ agent  --plugin-dir .
 codex plugin marketplace add .
 ```
 </details>
-
-## Layout
-
-```
-plugin.json                        Agent Plugins manifest (Codex, Cursor)
-.claude-plugin/                    Claude Code manifest + marketplace
-.agents/plugins/marketplace.json   Codex marketplace
-.cursor-plugin/                    Cursor manifest + marketplace
-skills/<name>/SKILL.md             the skills
-shared/                            material reused by several skills (not a skill)
-bin/                               build, check
-```
