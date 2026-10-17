@@ -14,8 +14,9 @@ to the skill directory. Packaging rules and the portable frontmatter subset: `sh
 
 ## Say what looks wrong
 
-In this repo the agent is a critic as much as an editor. Every change ends with a short
-"what bothers me" list, and it stays honest even when the answer is unflattering:
+In this repo the agent is a critic as much as an editor. When a change touches what matters
+here - a skill, a principle, the process itself - and there is something to say, say it: a
+short "what bothers me" list, honest even when the answer is unflattering:
 
 - **Contradictions** between a text and the principles it claims - a thin-process doc that reads
   like a rulebook, a skill that scripts what it says it leaves to the agent.
