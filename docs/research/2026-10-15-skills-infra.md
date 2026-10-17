@@ -84,7 +84,7 @@ Deferred alternative: the repo as a marketplace for all three. Pros - "login" wi
 
 - Multiple machines? If not, auto-update is a no-op.
 - Vendor third-party skills (mattpocock) into the repo, dotfiles-style, or keep them under `npx skills` (lock + `skills update -g -y` on a schedule; bug #162 - for **private** GitHub repos the hash is empty and update does not work)? Recommendation: keep under `npx skills`.
-- Skills under `~/arcadia/ai/artifacts/skills/` are a separate source.
+- Work skills kept in another repo are a separate source.
 - Publishing (marketplace manifests) now or later?
 
 ## 6. Sources
