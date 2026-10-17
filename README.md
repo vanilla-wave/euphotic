@@ -15,7 +15,9 @@ The operative version is the `skill-creator` skill.
 
 The repo root is the marketplace and the single plugin `euphotic`. No versions: every agent tracks the commit SHA, pushing is releasing.
 
-**Claude Code** - skills appear as `/euphotic:<name>` (bare `/<name>` when free).
+<details>
+<summary><b>Claude Code</b> - skills appear as <code>/euphotic:&lt;name&gt;</code> (bare <code>/&lt;name&gt;</code> when free)</summary>
+
 ```bash
 claude plugin marketplace add vanilla-wave/euphotic
 claude plugin install euphotic@euphotic
@@ -27,19 +29,36 @@ Auto-update is off for third-party marketplaces; this `~/.claude/settings.json` 
   "enabledPlugins": { "euphotic@euphotic": true }
 }
 ```
+</details>
 
-**Codex** (CLI and desktop; not the IDE extension) - skills appear as `$euphotic:<name>`. Git marketplaces refresh on every start.
+<details>
+<summary><b>Codex</b> (CLI and desktop; not the IDE extension) - skills appear as <code>$euphotic:&lt;name&gt;</code></summary>
+
 ```bash
 codex plugin marketplace add vanilla-wave/euphotic
 codex plugin add euphotic@euphotic
 ```
+Git marketplaces refresh on every start.
+</details>
 
-**Cursor** - skills appear as `/<name>`. No auto-refresh for personal marketplaces: `agent plugin marketplace update euphotic`.
+<details>
+<summary><b>Cursor</b> - skills appear as <code>/&lt;name&gt;</code></summary>
+
 ```bash
 agent plugin marketplace add https://github.com/vanilla-wave/euphotic   # then /plugins to install
 ```
+No auto-refresh for personal marketplaces: `agent plugin marketplace update euphotic`.
+</details>
 
-**Without installing**: `claude --plugin-dir .`, `agent --plugin-dir .`, `codex plugin marketplace add .`
+<details>
+<summary><b>Without installing</b></summary>
+
+```bash
+claude --plugin-dir .
+agent  --plugin-dir .
+codex plugin marketplace add .
+```
+</details>
 
 ## Develop
 
