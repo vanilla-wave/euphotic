@@ -1,6 +1,7 @@
 ---
 name: writing-great-skills
-description: Write, edit or review an agent skill (a SKILL.md). Use when the user asks to create a skill, make one shorter or more reliable, or diagnose why a skill misbehaves.
+description: Reference for writing, editing and reviewing skills — what to be exact about, what to leave to the agent, and the vocabulary that makes a skill predictable.
+disable-model-invocation: true
 license: MIT
 metadata:
   origin: adapted from mattpocock/skills (skills/productivity/writing-great-skills)

@@ -6,8 +6,8 @@ in - thin process layer, high agent autonomy, intent-driven.
 
 ## Writing or changing a skill
 
-Use the `writing-great-skills` skill. It is the single source of truth for how a skill is written,
-judged and changed here; if it is not loaded, read `skills/writing-great-skills/SKILL.md` first.
+Read `skills/writing-great-skills/SKILL.md` first (the user invokes it as `/writing-great-skills`).
+It is the single source of truth for how a skill is written, judged and changed here.
 
 Material shared by several skills lives in `shared/`, referenced as `../../shared/<path>` relative
 to the skill directory. Packaging rules and the portable frontmatter subset: `shared/CONVENTIONS.md`.
