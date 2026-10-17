@@ -1,7 +1,9 @@
 # euphotic
 
 Personal agent skills for Claude Code, Codex and Cursor, shipped as one plugin.
-Named after the thin sunlit layer of the ocean where almost all the growth happens.
+
+The euphotic zone is the thin, sunlit top layer of the ocean where almost all of the growth happens.
+This repo is that layer for an agent: a thin layer on top of a capable model, not a process manual.
 
 ## Principles
 
