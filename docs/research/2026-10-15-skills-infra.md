@@ -32,11 +32,10 @@ Legend: **V** - verified against docs/code, **I** - inferred.
 | Plugins / marketplace | `.claude-plugin/marketplace.json`; `autoUpdate` per marketplace (off for non-Anthropic), check <= 10 min after the first message, applied at next start (V) | `.agents/plugins/marketplace.json`; **all git marketplaces auto-upgrade at app-server start** (V, code); not in the IDE extension (V) | git marketplace; auto-refresh Teams only; `enabled_plugins` -> local folders (V) |
 
 Machine-specific notes:
-- `~/.codex/skills/tracker-issues -> ~/.agents/skills/tracker-issues` -> duplicate in Codex (both roots scanned). Remove.
-- `~/.codex/skills/arc-finder` is a real directory; `~/.claude/skills/arc-finder` points at it.
-- `~/.claude/skills/use-yandex` **and** `~/.agents/skills/use-yandex` are both real directories; the Claude copy is newer (WebSocket transport, 2026-09-09).
+- A symlink from `~/.codex/skills/` into `~/.agents/skills/` duplicates the skill in Codex (both roots scanned). Remove.
+- Some skills are real directories in one root with a symlink from another; one skill exists as two diverged real copies in `~/.claude/skills` and `~/.agents/skills`.
 - `~/.claude/skills/write-a-skill` - dangling symlink (in the lock file, no directory).
-- `~/.claude/skills/{memory-hygiene,test-tracker-release}` - real directories, Claude only.
+- A few skills are real directories under `~/.claude/skills` only.
 - Cursor sees both `~/.agents/skills/x` and `~/.claude/skills/x` (compat) -> duplicates; cured by turning off "Include Third-Party Plugins, Skills, and Other Configs" in the IDE (IDE-only setting, V), after which Cursor reads only `~/.agents/skills` + `~/.cursor/skills`. No CLI setting; rely on dedup in 3.17+.
 - 10 of the 12 own skills carry `disable-model-invocation: true`. Codex ignores it -> they are implicitly invocable there. Needs `agents/openai.yaml` with `allow_implicit_invocation: false` (generate from the frontmatter).
 
@@ -74,8 +73,8 @@ Deferred alternative: the repo as a marketplace for all three. Pros - "login" wi
 
 ## 4. Migration from the current state
 
-1. Move the 12 own skills out of `~/.agents/skills/*` (not in the lock file) plus `arc-finder`, `memory-hygiene`, `test-tracker-release`; reconcile the two `use-yandex` copies.
-2. Remove `~/.codex/skills/{arc-finder,tracker-issues}` and the dangling `write-a-skill`.
+1. Move the 12 own skills out of `~/.agents/skills/*` (not in the lock file) plus the Claude-only ones; reconcile the diverged copies.
+2. Remove the duplicating symlinks under `~/.codex/skills/` and the dangling `write-a-skill`.
 3. Generate `agents/openai.yaml` for the dmi skills.
 4. Cursor IDE: turn off third-party imports (kills duplicates); verify with `agent` -> `/skills`.
 5. Verify: `claude` -> `/context` (Skills row), `codex` -> `/skills`, `agent` -> `/skills` - one instance of each.
