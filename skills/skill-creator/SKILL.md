@@ -1,110 +1,106 @@
 ---
 name: skill-creator
-description: Reference for writing, editing and reviewing skills — what to be exact about, what to leave to the agent, and the vocabulary that makes a skill predictable.
+description: Write, edit and review skills. What to be exact about, what to leave to the agent, and the vocabulary that makes a skill predictable.
 disable-model-invocation: true
 license: MIT
 metadata:
-  origin: adapted from mattpocock/skills (skills/productivity/writing-great-skills)
+  origin: adapted from mattpocock/skills (skills/productivity/writing-for-agents @32165827)
 ---
 
-A skill exists so that the agent lands where you would have landed, by its own route. **Predictability** — the same judgment on every run, not the same sequence of actions — is the root virtue; every lever below serves it. A skill is a thin layer on a capable model, not a process manual: it carries your **intent** and leaves the agent its autonomy.
-
-**Bold terms** are defined in [`GLOSSARY.md`](GLOSSARY.md); look them up there for the full meaning.
+A skill exists so that the agent lands where you would have landed, by its own route. **Predictability** (the same judgment on every run, not the same sequence of actions and not the same output) is the root virtue; every lever below serves it. A brainstorming skill should _predictably_ diverge: its tokens vary, its priorities don't. A skill is a thin layer on a capable model, not a process manual: it carries your **intent** and leaves the agent its autonomy.
 
 ## What a skill is made of
 
 Three kinds of content, mixing freely:
 
-- **Reference** — facts the agent consults on demand: definitions, rules, examples, parameters.
-- **Interface** — how to drive a tool: commands, flags, field names, IDs, paths, status strings, the shape of a request or an output. Exact throughout, because none of it can be derived and a guess costs a round trip or a wrong write.
-- **Process** — how the work proceeds. Written as intent, not as a script.
+- **Reference**: facts the agent consults on demand: definitions, rules, examples, parameters.
+- **Interface**: how to drive a tool: commands, flags, field names, IDs, paths, status strings, the shape of a request or an output. Exact throughout, because a guess costs a round trip or a wrong write; where the tool prints it itself (`--help`, its own hints), point at the tool instead of copying it (see **cache**).
+- **Process**: how the work proceeds. Written as intent, not as a script.
 
-One rule decides how much to say: **be exact about facts the agent cannot derive and about actions it cannot undo; everything else is intent.** An undoable action earns a gate — dry-run first, confirm before delete, read-only unless asked — and the few hard limits, stated once, near the top, where compaction will not drop them.
+One rule decides how much to say: **be exact about facts the agent cannot derive or look up, and about actions it cannot undo; everything else is intent.** An irreversible action earns a gate (dry-run first, confirm before delete, read-only unless asked), and the few hard limits are stated once, near the top, where compaction will not drop them.
 
 **Intent** has three parts, and a process skill is mostly these:
 
-1. **Priorities**, in order — what wins when things conflict ("the patch is the source of truth, not its description").
-2. **What good looks like** — an example or a contrast that lets the agent recognise the target ("a ticket is a note to yourself: 2–5 words, no sections").
-3. A **completion criterion** — what _done_ means, not how to get there ("done when every side the question spans is backed by cited source"). It replaces the list of steps: a checkable, exhaustive criterion drives the **legwork** a script would try to enumerate.
+1. **Priorities**, in order: what wins when things conflict ("the patch is the source of truth, not its description").
+2. **What good looks like**: an example or a contrast that lets the agent recognise the target ("a ticket is a note to yourself: 2–5 words, no sections"). State the target, not the ban: steering by prohibition drags the forbidden behaviour into context and makes it _more_ available (_don't think of an elephant_). A prohibition earns its place only as a hard limit you cannot phrase positively, and even then sits beside the positive target. Failing this is **negation**.
+3. A **completion criterion**: what _done_ means, not how to get there ("done when every side the question spans is backed by cited source"). It replaces the list of steps.
 
-A **step** survives only where its order is forced — by a dependency (schema before call: the names are not guessable) or by an irreversible action (triage, then the gate, then the browser). Say why the order is forced. The test for every other step: could a competent agent, given the facts and the completion criterion, derive it? Then delete it — it is **over-scripting**. A step that exists to reassure a human — a confirmation, a report-back between steps, a gate with nothing irreversible behind it — is **ceremony**: state a default instead, and name the real decision points where a human must be asked.
+## Steps and completion criteria
+
+A **step** survives only where its order is forced: by a dependency (schema before call: the names are not guessable) or by an irreversible action (triage, then the gate, then the browser). Say why the order is forced. The test for every other step: could a competent agent, given the facts and the completion criterion, derive it? Then delete it. A step that fails the test is **over-scripting**: it costs tokens and attention, takes the route out of the agent's hands where its judgment was the point, and breaks differently from a derived route, because the agent follows it past the case it was written for. A step that exists to reassure a human (a confirmation with nothing irreversible behind it, a report-back between steps, a gate for its own sake) is **ceremony**: state a default instead, and name the real decision points where a human must be asked, usually an irreversible action or a matter of taste.
+
+A completion criterion is a lever twice:
+
+- **Clarity**: can the agent tell done from not-done? A vague bound ("understanding reached") invites **premature completion**: ending the work before it is done, attention slipping to _being done_. The visible steps still ahead (the **post-completion steps**) supply the pull; the criterion's clarity is the resistance. Sharpen the bound first (local and cheap); only if it is irreducibly fuzzy _and_ you observe the rush, hide the later steps by splitting the sequence. Hiding only works across a real context boundary, a subagent dispatch or a hand-off to the human; anything that stays in the same context clears nothing.
+- **Demand**: how much it requires. "Every modified model accounted for" forces thorough work where "produce a change list" does not. Demand drives **legwork** (the digging the agent does within the work, latent in the wording rather than written as its own step), and it binds flat reference too: "every rule applied" is how an all-reference skill carries an exhaustiveness bar. A skill that quits early with no steps to rush through has thin legwork, not premature completion: raise the demand.
+
+The strongest criteria are both checkable and exhaustive.
 
 ## Invocation
 
-Two choices, trading different costs:
+Two choices, each spending one of two loads:
 
-- A **model-invoked** skill keeps a **description**, so the agent can fire it autonomously _and_ other skills can reach it (you can still type its name too). It contributes to **context load** — the description sits in the window every turn. Mechanics: omit `disable-model-invocation`, and write a model-facing description with rich trigger phrasing ("Use when the user wants…, mentions…").
-- A **user-invoked** skill strips the description from the agent's reach: only you, typing its name, can invoke it — and no other skill can. Zero context load, but it spends **cognitive load**: _you_ are the index that must remember it exists. Mechanics: set `disable-model-invocation: true`; the `description` becomes human-facing — a one-line summary, trigger lists stripped.
+- A **model-invoked** skill keeps a **description**, so the agent can fire it on its own (you can still type its name). It pays **context load**: the description sits in the window every turn, spending tokens and attention whether or not it fires. Mechanics: omit `disable-model-invocation`, and write a model-facing description carrying the trigger branches.
+- A **user-invoked** skill hides the description from the agent: only you, typing its name, can invoke it. Zero context load, but it spends **cognitive load**: _you_ are the index that must remember it exists. Not a cost to minimise: it is the price of human agency, so spend it where human judgment matters. Mechanics: set `disable-model-invocation: true`; the `description` becomes a human-facing one-line summary.
 
-Pick model-invocation only when the agent must reach the skill on its own, or another skill must. If it only ever fires by hand, make it user-invoked and pay no context load.
+Pick model-invocation only when the agent must reach the skill on its own. If it only ever fires by hand, make it user-invoked and pay no context load. Material several skills need is a file in `shared/`, not a skill another skill invokes (`shared/CONVENTIONS.md` says why).
 
-When user-invoked skills multiply past what you can remember, that piled-up cognitive load is cured by a **router skill**: one user-invoked skill that names the others and when to reach for each.
+When user-invoked skills multiply past what you can remember, a **router skill** cures the piled-up cognitive load: one user-invoked skill that names the others and when to reach for each. It can only hint, never fire them.
 
-## Writing the description
+## Context pointers
 
-A model-invoked **description** does two jobs — state what the skill is, and list the **branches** that should trigger it. Every word increases **context load**, so a description earns even harder pruning than the body:
+A **context pointer** names out-of-context material and encodes the condition for reaching it. A model-invoked skill's description is the top-level one; a line in `SKILL.md` naming a sibling file or a `../../shared/` file is the same object one level down. The pointer's _wording_, not its target, decides when the agent reaches the material, and how reliably. A must-have target behind a weakly worded pointer is a variance bug: sharpen the wording first, and inline the material only if sharpening fails. Keep pointers one hop deep.
 
-- **Front-load the skill's leading word** — the description is where it does its invocation work.
-- **One trigger per branch.** Synonyms that rename a single branch are **duplication** — "build features using TDD … asks for test-first development" is one branch written twice. Collapse them; keep only genuinely distinct branches.
-- **Cut identity that's already in the body.** Keep the description to triggers, plus any "when another skill needs…" reach clause.
+A pointer does two jobs: state what the material is, and list the **branches** that should trigger reaching it (a branch is a distinct case the skill handles, so different runs take different paths through it). An always-loaded pointer costs on every turn, so the description earns even harder pruning than the body:
+
+- **Front-load the leading word**: the description is where it does its invocation work.
+- **One trigger per branch.** Synonyms that rename a single branch are one branch written twice: "build features using TDD … asks for test-first development". Collapse them.
+- **Cut identity the body already carries.** Keep the description to triggers.
 
 ## Information hierarchy
 
-Rank each piece of content by how immediately the agent needs it — the **information hierarchy**, a ladder:
+Rank each piece of content by how immediately the agent needs it, a ladder:
 
-1. **In-skill intent** — the primary tier of a process skill: priorities, what good looks like, the completion criterion, and the few steps whose order is forced. What the agent must hold while it works.
-2. **In-skill reference** — a definition, rule, interface detail or fact in `SKILL.md`, consulted on demand. Often a legitimately flat peer-set (every rule of a review on one rung) — a fine arrangement, not a smell. _This skill is all reference._
-3. **External reference** — reference pushed out of `SKILL.md` into a separate file, reached by a **context pointer**, loaded only when the pointer fires. Spans _disclosed_ reference — a sibling file like `GLOSSARY.md`, still part of the skill — through fully **external reference** that lives outside the skill system and any skill can point at.
+1. **In-skill intent**: priorities, what good looks like, the completion criterion, and the few forced steps. What the agent must hold while it works.
+2. **In-skill reference**: a definition, rule, interface detail or fact in `SKILL.md`, consulted on demand. Often a legitimately flat peer-set (every rule of a review on one rung), which is fine, not a smell.
+3. **Disclosed reference**: pushed out of `SKILL.md` into a sibling file or into `shared/`, reached by a context pointer, loaded only when the pointer fires.
 
 Push too little down and the top bloats; push too much and you hide material the agent actually needs. That tension is the whole decision.
 
-**Progressive disclosure** is the move down the ladder — out of `SKILL.md` into a linked file — so the top stays legible. Some skills are used in more than one way, and each distinct way is a **branch** — different runs taking different paths through the skill. Branching is the cleanest disclosure test: inline what every branch needs, and push behind a pointer what only some branches reach. A **context pointer**'s _wording_, not its target, decides when and how reliably the agent reaches the material; keep pointers one hop deep.
+**Progressive disclosure** is the move down the ladder, so the top stays legible. It protects the hierarchy more than it saves tokens: in-file reference that should be disclosed buries the intent and turns attending to it into a coin-flip. Branching is the cleanest test: inline what every branch needs, and disclose what only some branches reach.
 
-Where the ladder decides _how far down_ a piece sits, **co-location** decides _what sits beside it_ once there: keep a concept's definition, rules, and caveats under one heading rather than scattered, so reading one part brings its neighbours with it.
+**Co-location** decides what sits beside a piece once the ladder has placed it: keep a concept's definition, rules and caveats under one heading rather than scattered, so reading one part brings its neighbours. The test: the skill reads like documentation written for the agent.
+
+**Sprawl** is a skill simply too long, even when every line is live and unique: attention thins across the excess, and every extra line is one more to keep relevant. The cure is the ladder: disclose reference, and split by branch or sequence so each path carries only what it needs.
 
 ## When to split
 
-**Granularity** is how finely you divide skills, and each cut spends one of the two loads, so split only when the cut earns it. Two cuts:
+Each cut spends one of the two loads, so split only when it earns that:
 
-- **By invocation** — split off a **model-invoked** skill when you have a distinct **leading word** that should trigger it on its own, or another skill must reach it. You pay **context load** for the new always-loaded **description**, so that independent reach has to be worth it.
-- **By sequence** — split a run of forced **steps** when the steps still ahead (a step's **post-completion steps**) tempt the agent to rush the one in front of it (**premature completion**). Sharpen the completion criterion first; split only if the rush survives that.
-
-## Pruning
-
-Keep each meaning in a **single source of truth**: one authoritative place, so changing the behaviour is a one-place edit.
-
-Check every line for **relevance**: does it still bear on what the skill does?
-
-Then hunt **no-ops** sentence by sentence, not just line by line: run the no-op test on each sentence in isolation, and when one fails, delete the whole sentence rather than trim words from it. Be aggressive — most prose that fails should go, not be rewritten.
+- **By invocation**: split off a model-invoked skill when a distinct **leading word** you actually use in your prompts should trigger it on its own. Its description is new permanent context load, so that independent reach has to be worth it.
+- **By sequence**: split a run of forced steps where the post-completion steps tempt the agent to rush the one in front of it, and only after sharpening its criterion failed. The reverse holds too: merging sequences exposes each step to the steps that follow, inviting premature completion.
 
 ## Leading words
 
-A **leading word** is a compact concept already living in the model's pretraining that the agent thinks with while running the skill (e.g. _lesson_, _fog of war_, _tracer bullets_). Repeated throughout the text (though a strong one may be needed only once), it accumulates a distributed definition and anchors a whole region of behaviour in the fewest tokens, by recruiting priors the model already holds.
+A **leading word** is a compact concept already living in the model's pretraining that the agent thinks with while running the skill (_lesson_, _fog of war_, _tracer bullets_). Repeated as a token, never as a sentence, it accumulates a distributed definition and anchors a whole region of behaviour in the fewest tokens, by recruiting priors the model already holds. A coined word works if you define it, but it recruits no priors: you pay in definition tokens what a pretrained word gives free.
 
-It serves predictability twice. In the body it anchors _execution_: the agent reaches for the same behaviour every time the word appears. In the description it anchors _invocation_: when the same word lives in your prompts, docs, and code, the agent links that shared language to the skill and fires it more reliably.
+It anchors twice. In the body, _execution_: the agent reaches for the same behaviour every time the word appears, and inside flat reference it focuses attention on a class of thing to look for. In the description, _invocation_: when the same word lives in your prompts, docs and code, the agent links that shared language to the skill and fires it more reliably.
 
-Hunt for opportunities to refactor skills to use leading words. A triad spelled out at three sites (**duplication**), a description spending a sentence to gesture at one idea — each is a passage begging to **collapse** into a single token:
+Hunt for restatements a leading word retires: a triad spelled out at three sites, a description spending a sentence to gesture at one idea.
 
-- "fast, deterministic, low-overhead" -> _tight_ — one quality restated across a phase — into a single pretrained word (a _tight_ loop).
-- "a loop you believe in" -> _red_ — converts a fuzzy gate into a binary observable state (the loop goes _red_ on the bug, or it doesn't).
+- "fast, deterministic, low-overhead" → _tight_ (a _tight_ loop).
+- "a loop you believe in" → _red_, turning a fuzzy gate into a binary observable state (the loop goes _red_ on the bug, or it doesn't).
+
+## Pruning
+
+- Keep each meaning in a **single source of truth**: one authoritative place, so changing the behaviour is a one-place edit. **Duplication** (one meaning in two places) costs maintenance and tokens, and inflates the meaning's rank on the ladder. It is the accidental inverse of a leading word, which repeats a token on purpose, never the meaning.
+- The **environment** is a source of truth too: `--help` output, a helper's printed hints, config files, the directory layout, the global instructions every runtime loads. A line that restates it is a **cache**, earning its load only when the lookup is expensive. Cache what the agent cannot find by looking: the unwritten convention, the reason behind a choice, the gotcha no config confesses. Look before assuming a runtime lacks it.
+- Check every line for **relevance**: does it still bear on what the skill does? A line loses it by never bearing on the task (exposition, a branch that should be disclosed) or by going stale. Without a pruning discipline the default fate is **sediment**: stale layers that settle because adding feels safe and removing feels risky. The discipline is _subtract before you add_: remove, merge or reword before writing a new line.
+- Hunt **no-ops** sentence by sentence: a line the model already obeys by default pays load to say nothing. The test (does it change behaviour versus the default?) is model-relative, not reader-relative: a disagreement about a no-op is a disagreement about the default, settled by running the skill, not by debate. When a sentence fails, delete the whole sentence rather than trim it. The test grades leading words too: one too weak to beat the default (_be thorough_ when the agent is already thorough-ish) is a no-op, and the fix is a stronger word (_relentless_).
 
 ## Changing a skill
 
 When a skill misbehaves, the fix is almost never one more sentence.
 
-- **Root cause, not symptom.** "The agent skipped step 3" is a symptom. The cause is usually a priority that was never stated, a step that should not exist, or two instructions pulling in opposite directions. Find it and fix that; do not bolt on a reminder.
-- **Subtract before you add.** Try removing, merging or rewording first. A skill that grows with every incident is accumulating **sediment**, not improving.
-- **A pile of patches is a design smell** — same as in code. When the third fix lands in the same place, the design is wrong one level up: the skill's scope, the split between skills, the shared procedure, or a helper script that should own the mechanism. Redesign there instead of adding the next patch (**patch pile**).
-
-## Failure modes
-
-Use these to diagnose issues the user may be having with the skill.
-
-- **Over-scripting** — steps the agent would have derived from the facts and the completion criterion. Costs tokens and attention, and takes the route out of the agent's hands where its judgment was the point. The cure is the step test above: keep facts, limits and forced order; delete the rest.
-- **Ceremony** — a step that exists to reassure a human rather than to change the outcome: a confirmation with nothing irreversible behind it, a report-back between steps, a stage gate for its own sake. Replace with a default and a named decision point.
-- **Premature completion** — ending a step before it's genuinely done, attention slipping to _being done_. Defence, in order: sharpen the completion criterion first (cheap, local); only if it is irreducibly fuzzy _and_ you observe the rush, hide the post-completion steps by splitting (the sequence cut).
-- **Duplication** — the same meaning in more than one place. Costs maintenance and tokens, and inflates a meaning's prominence on the ladder past its real rank.
-- **Sediment** — stale layers that settle because adding feels safe and removing feels risky. The default fate of any skill without a pruning discipline.
-- **Patch pile** — the same place fixed three times. Not a pruning problem: a sign that the design one level up is wrong.
-- **Sprawl** — a skill simply too long, even when every line is live and unique. Hurts readability and maintainability and wastes tokens. The cure is the ladder: disclose **reference** behind pointers, and split by **branch** or sequence so each path carries only what it needs.
-- **No-op** — a line the model already obeys by default, so you pay load to say nothing. The test: does it change behaviour versus the default? A weak leading word (_be thorough_ when the agent is already thorough-ish) is a no-op; the fix is a stronger word (_relentless_), not a different technique.
+- **Root cause, not symptom.** "The agent skipped step 3" is a symptom. The cause is usually a priority never stated, a step that should not exist, or two instructions pulling in opposite directions. Fix that; do not bolt on a reminder.
+- **A pile of patches is a design smell.** When the third fix lands in the same place, the design is wrong one level up: the skill's scope, the split between skills, the shared procedure, or a helper that should own the mechanism. Redesign there instead of adding the next patch (**patch pile**).
