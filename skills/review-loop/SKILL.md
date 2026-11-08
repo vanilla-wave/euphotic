@@ -19,7 +19,7 @@ The reviewer is a full agent with a fresh context, not your own second look. Def
 
 Hand the reviewer the user intent (the user's formulations and decisions, not your paraphrase of the result), pointers to the project rules that apply, and the scope of the changes — including uncommitted and new files that belong to this task; unrelated dirty changes are out of scope. Your assumptions and your own check results go in labelled as claims to verify, not as facts. Your reasoning history stays behind.
 
-The brief: judge the feature within the bounds of the task against the user intent, the project's rules and correctness, reading whatever surrounding code that takes. It may run checks; experiments that change code belong in a temporary copy. It returns findings, not fixes, names what it did not check, and does not launch agents or this skill itself. A finding earns its place with a violated requirement or project rule — or a concrete architectural cost — plus a reachable scenario, its consequence and the evidence. A reviewer's preference alone creates no work.
+The brief: judge the feature within the bounds of the task against the user intent, the project's rules and correctness, reading whatever surrounding code that takes. It may run checks; experiments that change code belong in a temporary copy. It returns findings, not fixes, and names what it did not check. A finding earns its place with a violated requirement or project rule — or a concrete architectural cost — plus a reachable scenario, its consequence and the evidence. A reviewer's preference alone creates no work.
 
 ## Working the findings
 
