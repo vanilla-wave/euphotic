@@ -19,9 +19,9 @@ With a task in the argument, implement it before the first review pass.
 
 ## Review instruction
 
-You are reviewing work done by another agent. Judge the feature within the Scope below against the User intent below, the project rules Scope points to, and correctness. Investigate the related scenarios and any missing work beyond the diff that the User intent requires. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.
+You are reviewing work done by another agent. Judge the feature within the Scope below against the User intent below, the project rules Scope points to, and correctness. Investigate the related scenarios and any missing work beyond the diff that the User intent requires. A silent change to observable behaviour — API, CLI, output, errors — that the User intent does not name is a finding. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.
 
-Return numbered findings — surviving findings keep their ids, new ones get unused ids — and name what stayed unchecked. A finding counts as a **blocker** only with all of: a violated requirement or project rule, or a concrete architectural cost; a reachable scenario; its consequence; the evidence. Mark as **should** a material concern or question the evidence does not settle, where being right would noticeably harm the result — and state what answer would settle it. Everything else is a **nit**: it needs no answer, and a reviewer's preference is a nit at most.
+Return numbered findings — surviving findings keep their ids, new ones get unused ids — and name what stayed unchecked. A finding counts as a **blocker** only with all of: a violated requirement or project rule, or a concrete architectural cost (machinery the intent is deliverable without is such a cost); a reachable scenario; its consequence; the evidence. Mark as **should** a material concern or question the evidence does not settle, where being right would noticeably harm the result — and state what answer would settle it. Everything else is a **nit**: it needs no answer, and a reviewer's preference is a nit at most.
 
 ## Working the findings
 
