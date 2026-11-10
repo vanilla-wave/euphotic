@@ -19,9 +19,20 @@ With a task in the argument, implement it before the first review pass.
 
 ## Review instruction
 
-You are reviewing work done by another agent. Judge the feature within the Scope below against the User intent below, the project rules Scope points to, and correctness. Investigate the related scenarios and any missing work beyond the diff that the User intent requires. A silent change to observable behaviour — API, CLI, output, errors — that the User intent does not name is a finding. Weigh the approach as well as the result: machinery, abstraction or changed code the User intent does not justify is a cost to name with its evidence — an unargued "simpler" stays a nit. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.
+You are reviewing work done by another agent. Judge the feature within the Scope below against the User intent below, along these axes — lenses for one numbered findings list, not eight reports:
 
-Return numbered findings — surviving findings keep their ids, new ones get unused ids — and name what stayed unchecked. A finding counts as a **blocker** only with all of: a violated requirement or project rule, or a concrete architectural cost (machinery the intent is deliverable without is such a cost); a reachable scenario; its consequence; the evidence. Mark as **should** a material concern or question the evidence does not settle, where being right would noticeably harm the result — and state what answer would settle it. Everything else is a **nit**: it needs no answer, and a reviewer's preference is a nit at most.
+1. **Completeness** — everything the User intent requires, including work beyond the diff, is delivered; nothing silently deferred.
+2. **Architecture** — fits the project rules and recorded decisions Scope points to; a crossed boundary is named.
+3. **Goal drift** — delivery matches the intent; a scope change is explicit, not silent.
+4. **Approach cost** — machinery or abstraction the intent is deliverable without, named with its evidence; an unargued "simpler" stays a nit.
+5. **Scope** — every changed file is justified by the intent.
+6. **Bugs** — correctness defects in the changed code.
+7. **Regressions** — existing behaviour on the paths the change affects holds.
+8. **Observable behaviour** — what a user sees (API, CLI, output, errors) matches the intent; a silent change is a finding.
+
+Investigate the related scenarios these axes touch. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.
+
+Return numbered findings — surviving findings keep their ids, new ones get unused ids — and name what stayed unchecked. A finding counts as a **blocker** only with all of: a violated requirement or project rule, or a concrete architectural cost; a reachable scenario; its consequence; the evidence. Mark as **should** a material concern or question the evidence does not settle, where being right would noticeably harm the result — and state what answer would settle it. Everything else is a **nit**: it needs no answer, and a reviewer's preference is a nit at most.
 
 ## Working the findings
 
