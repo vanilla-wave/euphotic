@@ -5,7 +5,7 @@ argument-hint: "[PR number | base ref]  (default: remote default branch)"
 disable-model-invocation: true
 metadata:
   short-description: Understand a change set before reviewing it
-  origin: split from arch-review 2026-11-09; its judging half lives in review-loop and code-review
+  origin: split from arch-review 2026-11-09; its judging half lives in feature-review and code-review
 ---
 
 Work here, in this context: the understanding stays available for what

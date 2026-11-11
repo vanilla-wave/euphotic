@@ -1,5 +1,5 @@
 #!/usr/bin/env python3 -I
-"""Lint the plugin: skill frontmatter, portability, manifest consistency, generated files.
+"""Lint the plugin: skill frontmatter, portability, shared term definitions, manifest consistency, generated files.
 Exit 1 on errors; warnings do not fail. Runs `claude plugin validate .` when available."""
 import json
 import os
@@ -16,6 +16,7 @@ from _skills import (GENERATED_MARK, REPO, SKILLS, parse_frontmatter,  # noqa: E
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 NON_PORTABLE = re.compile(r"~/\.(claude|agents|codex|cursor)/skills/|\$\{?CLAUDE_(PLUGIN_ROOT|SKILL_DIR)")
 SHARED_REF = re.compile(r"\.\./\.\./shared/([A-Za-z0-9_./-]+)")
+TERM_DEF = re.compile(r"^\*\*([^*\n]+)\*\* — (.+)$", re.M)
 errors, warnings = [], []
 
 
@@ -108,6 +109,25 @@ def check_skills():
     print(f"skills: {len(seen)} checked")
 
 
+def check_term_definitions():
+    """A term defined at paragraph start (`**Term** — ...`) in several skills must open
+    with the same sentence in each, so the meaning has one wording to change."""
+    variants = {}
+    for d in skill_dirs():
+        sk = d / "SKILL.md"
+        if not sk.exists():
+            continue
+        for m in TERM_DEF.finditer(sk.read_text()):
+            opening = re.split(r"(?<=\.)\s", m.group(2), maxsplit=1)[0]
+            variants.setdefault(m.group(1), {}).setdefault(opening, []).append(d.name)
+    for term, by_opening in sorted(variants.items()):
+        if len(by_opening) > 1:
+            err(f"term {term!r} opens differently across skills:\n" +
+                "\n".join(f"       {', '.join(names)}: {opening}" for opening, names in by_opening.items()))
+    shared = sorted(t for t, v in variants.items() if sum(len(n) for n in v.values()) > 1)
+    print(f"terms: {len(shared)} shared by several skills" + (f" ({', '.join(shared)})" if shared else ""))
+
+
 def check_claude_validate():
     if not shutil.which("claude"):
         warn("claude not in PATH - skipped `claude plugin validate .`")
@@ -125,6 +145,7 @@ def main():
     check_manifests()
     check_tree()
     check_skills()
+    check_term_definitions()
     check_claude_validate()
     for w in warnings:
         print("WARN", w)

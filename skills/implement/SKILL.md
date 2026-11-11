@@ -20,7 +20,7 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 2. (optional) Use an **exploration subagent** to conduct any exploration required by the tickets - relevant codebase files or external documentation. Ensure the exploration subagent can save files - it should save its markdown notes in a directory outside the repo, accessible by all future subagents. This lets **implementer subagents** focus on implementation rather than exploration.
 
-3. If already in a worktree, use its current branch as the integration branch; otherwise, create the integration branch. If the user asks for a PR, open a draft PR after the first merge in step 5 (a branch with no commits ahead of main can't open one).
+3. If already in a worktree, use its current branch as the integration branch; otherwise, create the integration branch.
 
 4. Use **implementer subagents** to implement each ticket, each in its own worktree on its own branch. Each implementer subagent:
    - confirms its worktree is based on the integration branch before starting, and resets onto it if not;
@@ -32,8 +32,6 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 6. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.
 
-7. Once all tickets are complete, run `review-loop` (`../review-loop/SKILL.md`) on the integration branch, with the spec as its `Spec`. Its fixes go to an **implementer subagent**.
+7. Report the integration branch.
 
-8. If a draft PR exists, mark it ready for review. Otherwise, report the integration branch.
-
-9. Clean up all **implementer subagent** worktrees and any `.scratch/<feature>/` ticket files created for this run.
+8. Clean up all **implementer subagent** worktrees and any `.scratch/<feature>/` ticket files created for this run.

@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 Grill yourself relentlessly over the intent: walk every branch of its decision tree, resolving the dependencies between decisions one by one, and answer every question yourself. Where an interviewer would ask the user and recommend an answer, the recommended answer is the decision.
 
-**Intent** — what the user wants: their goal, constraints and the decisions they have already made. The root of the tree is your reading of it.
+**User intent** — what the user wants: their goal, constraints and decisions. The root of the tree is your reading of it.
 
 A branch is settled by the intent first, by evidence second — the codebase, the docs, a quick experiment — and by your own call only where both are silent.
 

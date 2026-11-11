@@ -50,6 +50,11 @@ the agents read nested references only partially), and nothing in prose is deter
 that must happen every time belongs in the first lines of `SKILL.md` (Claude keeps only the first
 ~5000 tokens of a skill after context compaction) or in a hook, not in capital letters.
 
+A term several skills define is not a shared file: it is defined in each of them, at paragraph start
+as `**Term** — ...`. (!) The opening sentence is the same in every skill that defines the term; what
+only one skill needs follows as its own sentence. Changing the meaning is then one wording, edited
+everywhere `bin/check` points.
+
 Scripts shared by several skills go in `shared/bin/` and are invoked as `../../shared/bin/<tool>`.
 (!) `bin/check` warns about absolute `~/.claude/skills/...`-style paths: they do not survive packaging.
 
