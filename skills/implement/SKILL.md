@@ -28,11 +28,11 @@ Communication to and from subagents should be sparse. Communicate primarily thro
    - builds the ticket per `tdd` (`../tdd/SKILL.md`);
    - merges the integration branch tip into its own branch before reporting done
 
-5. Once an **implementer subagent** completes, merge its work to the integration branch with a **merger subagent**.
+5. Once an **implementer subagent** completes, run `code-review` (`../code-review/SKILL.md`) in the ticket's worktree: the fixed point is the integration branch, the spec is the ticket file. Its findings are fixed in that worktree; one pass, the fixes are not re-reviewed here. Then merge the ticket's work to the integration branch with a **merger subagent**.
 
 6. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.
 
-7. Once all tickets are complete, run `code-review` (`../code-review/SKILL.md`) on the integration branch. Fix all issues raised by the code review in a single **implementer subagent**.
+7. Once all tickets are complete, run `review-loop` (`../review-loop/SKILL.md`) on the integration branch, with the spec as its `Spec`. Its fixes go to an **implementer subagent**.
 
 8. If a draft PR exists, mark it ready for review. Otherwise, report the integration branch.
 

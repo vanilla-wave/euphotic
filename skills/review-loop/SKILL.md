@@ -14,14 +14,26 @@ With a task in the argument, implement it before the first review pass.
 ## Reviewer
 
 - Launch a fresh-context full agent through your own CLI, non-interactively, with your model, mode and permissions where the interface lets you set them. The `review-loop` section of `~/ai/euphotic/preferences.md`, if present, overrides the reviewer or model. With no external CLI available: a fresh-context subagent on your model, and tell the user at that moment that the review is downgraded.
-- Pass the Review instruction below verbatim, followed by three blocks: `User intent` — in the user's formulations and decisions; `Scope` — this task's changes (committed, uncommitted and new files alike; unrelated dirty changes stay out), with pointers to the project rules that apply; `Claims to verify` — your assumptions and check results. On a re-verification, add `Previous findings` with their ids and dispositions. Your reasoning history stays with you.
+- Pass the Review instruction below verbatim, followed by these blocks: `User intent` — in the user's formulations and decisions; `Spec` — the path to the spec, when the work was built from one; `Scope` — this task's changes (committed, uncommitted and new files alike; unrelated dirty changes stay out), with pointers to the project rules and recorded decisions that apply; `Claims to verify` — your assumptions and check results. On a re-verification, add `Previous findings` with their ids and dispositions. Your reasoning history stays with you.
 - The budget is 3 rounds (reviewer launches) unless the user sets another. A failed launch is not a round.
 
 ## Review instruction
 
-You are reviewing work done by another agent. Judge the feature within the Scope below against the User intent below, the project rules Scope points to, and correctness. Investigate the related scenarios and any missing work beyond the diff that the User intent requires. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.
+You are reviewing work done by another agent. Judge the feature within the Scope below against the User intent below, along the axes below. A Spec block, when present, is a derivative of that intent: judge against it too; where the two disagree the intent wins and the disagreement is a finding.
 
-Return numbered findings — surviving findings keep their ids, new ones get unused ids — and name what stayed unchecked. A finding counts as a **blocker** only with all of: a violated requirement or project rule, or a concrete architectural cost; a reachable scenario; its consequence; the evidence. Mark as **should** a material concern or question the evidence does not settle, where being right would noticeably harm the result — and state what answer would settle it. Everything else is a **nit**: it needs no answer, and a reviewer's preference is a nit at most.
+1. **Completeness** — everything the User intent requires, including work beyond the diff, is delivered; nothing silently deferred.
+2. **Architecture** — fits the project rules and recorded decisions Scope points to; a crossed boundary is named.
+3. **Goal drift** — delivery matches the intent; a scope change is explicit, not silent.
+4. **Approach cost** — machinery or abstraction the intent is deliverable without, named with its evidence; an unargued "simpler" stays a nit.
+5. **Footprint** — every changed file is justified by the intent.
+6. **Bugs** — correctness defects in the changed code.
+7. **Regressions** — existing behaviour on the paths the change affects holds.
+8. **Observable behaviour** — what a user sees (API, CLI, output, errors) matches the intent; a silent change is a finding.
+9. **Code quality** — smells in the changed code and between its parts; code that is hard to maintain harms the result too.
+
+Investigate the related scenarios these axes touch. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.
+
+Return numbered findings, each naming its axis — surviving findings keep their ids, new ones get unused ids — and for every axis what was checked and what stayed unchecked. A finding counts as a **blocker** only with all of: a violated requirement or project rule, or a concrete architectural cost; a reachable scenario; its consequence; the evidence. Mark as **should** a material concern or question the evidence does not settle, where being right would noticeably harm the result — and state what answer would settle it. Everything else is a **nit**: it needs no answer, and a reviewer's preference is a nit at most.
 
 ## Working the findings
 
@@ -33,4 +45,4 @@ Return numbered findings — surviving findings keep their ids, new ones get unu
 
 ## Done
 
-Every blocker is fixed and verified against the actual code, or rejected with evidence; every should is answered or deferred with a reason. The report names the checks and their results, what stayed unchecked, every rejected blocker and every deferred should. A blocker awaiting the user's answer, or an unsettled disagreement over a blocker, means not done: report the task as blocked on exactly that. If the budget runs out before the latest changes are reviewed, the result stays unverified and the work is not done.
+Every blocker is fixed and verified against the actual code, or rejected with evidence; every should is answered or deferred with a reason. The report goes axis by axis — the checks and their results, the findings with their dispositions, what stayed unchecked — and names every rejected blocker and every deferred should. A blocker awaiting the user's answer, or an unsettled disagreement over a blocker, means not done: report the task as blocked on exactly that. If the budget runs out before the latest changes are reviewed, the result stays unverified and the work is not done.
