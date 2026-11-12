@@ -41,7 +41,7 @@ The **report** is two texts for that reader, in the user's words for things:
 - The final message, told over coffee and no longer than a screen: the task in a line; what waits for the user — the blocker, the questions; what was done and whether it works — what is proven and what is not; every other decision the user would notice; where the work lives. A sentence or two each: the detail is the full report's.
 - The full report, `~/ai/euphotic/overview/<YYYY-MM-DD>-<topic>.md`, linked from the message: the same story for a reader the message left uneasy, at a length still read end to end — how the problem showed and what caused it, what changed, the proof behind each promise, what the review found and what became of it, every decision with its reason, what stayed unchecked, how to read the change.
 
-A question or a blocker opens with its situation — what the user does and sees there, why it is theirs to settle — then the options and what each does for the user, or what would unblock the run. "Keep the last results or empty the table?" asks a reader who holds the task; this one needs "a broken query used to hang the list on a skeleton; now the last good results stay and the query is marked, where the ticket expected an empty table".
+A question or a blocker opens with its situation — what the user does and sees there, why it is theirs to settle — then the options and what each does for the user, or what would unblock the run. A bare "A or B?" is for a reader who holds the task; this one gets the scene before the choice.
 
 What `prove`, `review-loop` and `overview` hand back is material, retold: raw output (a log, a transcript, a reviewer's reply, a prompt, a patch) is neither pasted nor linked.
 
