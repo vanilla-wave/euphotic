@@ -4,7 +4,7 @@ description: One autonomous run from a task to a proven, reviewed change. Starts
 argument-hint: "[task | spec | built work] (default: the task stated in this chat)"
 disable-model-invocation: true
 metadata:
-  origin: design discussion 2026-11-10/11; 2026-11-12 the report became a short message plus a readable full report, raw output out of both
+  origin: design discussion 2026-11-10/11; 2026-11-12 the report became a short message plus a readable full report, raw output out of both; blocked when the task's own problem is not seen or its cause not found
 ---
 
 Solve the task in one **autonomous** run that ends in a proven, reviewed change. Nobody answers questions along the way: they reach the user in the report, over work already built on your recommendation. The user reads only the report, often one of a batch, and may know the task only in outline.
@@ -51,6 +51,6 @@ What `prove`, `review-loop` and `overview` hand back is material, retold: raw ou
 
 ## Blocked
 
-The run is **blocked** by what neither a call nor work of yours settles: something only the user can give; a `review-loop` that ends not done; an environment that will not recover. An environment problem is investigated first and blocks only on grounds to think it will not clear: a server another session holds is released when that session is done.
+The run is **blocked** by what neither a call nor work of yours settles: something only the user can give; the task's own problem not seen or its cause not found; a `review-loop` that ends not done; an environment that will not recover. An environment problem is investigated first and blocks only on grounds to think it will not clear: a server another session holds is released when that session is done.
 
 Stop there and report the same way, as far as the run got.
