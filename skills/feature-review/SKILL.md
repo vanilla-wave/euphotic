@@ -29,7 +29,7 @@ You are reviewing work done by another agent. Judge the feature within the Scope
 5. **Footprint** — every changed file is justified by the intent.
 6. **Bugs** — correctness defects in the changed code.
 7. **Regressions** — existing behaviour on the paths the change affects holds.
-8. **Observable behaviour** — what a user sees (API, CLI, output, errors) matches the intent; a silent change is a finding.
+8. **Observable behaviour** — what a user sees (API, CLI, output, errors) matches the intent; a silent change is a finding. So is what the change settles in the cases around the intent's own scenario when neither the intent nor `Claims to verify` names it.
 9. **Code quality** — smells in the changed code and between its parts; code that is hard to maintain harms the result too.
 
 Investigate the related scenarios these axes touch. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.
