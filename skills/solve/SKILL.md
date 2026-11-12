@@ -32,7 +32,7 @@ A **decision** is what the change settles for the user that the intent leaves op
 - Would notice → a **question**: build your recommendation, ask in the final message — the options and what each does for the user. A `review-loop` decision point is one; it holds nothing open.
 - A "no" would discard the run, or the step cannot be undone → blocked. In doubt, the question.
 
-Every decision goes to the reviewer among `Claims to verify`.
+What the reviewer finds the change settles is a decision too, and goes the same way.
 
 ## Done
 

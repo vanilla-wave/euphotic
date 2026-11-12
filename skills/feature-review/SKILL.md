@@ -5,17 +5,20 @@ argument-hint: "[scope] (default: the work done in this chat)"
 disable-model-invocation: true
 metadata:
   short-description: Fresh-context review of a feature against the user intent
-  origin: split from review-loop 2026-11-11, which keeps the loop; decision boundary from rifty (user fork)
+  origin: split from review-loop 2026-11-11, which keeps the loop; decision boundary from rifty (user fork); 2026-11-12 Claims to verify dropped, the reviewer gets the intent and pointers to the work, not the author's account
 ---
 
 One review pass over the work by a fresh-context reviewer. Read-only: the work is judged here, not fixed.
 
-**User intent** — what the user wants: their goal, constraints and decisions. A later decision overrides an earlier one. Your choices and assumptions are separate and stay labelled as yours.
+**User intent** — what the user wants: their goal, constraints and decisions. A later decision overrides an earlier one. Your choices and assumptions are not part of it.
 
 ## Reviewer
 
 - Launch a fresh-context full agent through your own CLI, non-interactively, with your model, mode and permissions where the interface lets you set them. The `feature-review` section of `~/ai/euphotic/preferences.md`, if present, overrides the reviewer or model. With no external CLI available: a fresh-context subagent on your model, and tell the user at that moment that the review is downgraded.
-- Pass the Review instruction below verbatim, followed by these blocks: `User intent` — in the user's formulations and decisions; `Spec` — the path to the spec, when the work was built from one; `Scope` — this task's changes (committed, uncommitted and new files alike; unrelated dirty changes stay out), with pointers to the project rules and recorded decisions that apply; `Claims to verify` — your assumptions and check results. Your reasoning history stays with you.
+- Pass the Review instruction below verbatim, then these blocks and nothing else of yours — your choices, assumptions, check results and reasoning stay with you:
+  - `User intent` — in the user's formulations and decisions.
+  - `Spec` — the path to the spec, when the work was built from one.
+  - `Scope` — where this task's changes live: the paths, refs or commands that reach them (committed, uncommitted and new files alike; unrelated dirty changes stay out), with pointers to the project rules and recorded decisions that apply.
 - A re-pass adds `Previous findings` with their ids and dispositions. It judges the open findings and the code changed since the previous pass, plus the paths that code affects; settled areas reopen only on new evidence.
 
 ## Review instruction
@@ -29,7 +32,7 @@ You are reviewing work done by another agent. Judge the feature within the Scope
 5. **Footprint** — every changed file is justified by the intent.
 6. **Bugs** — correctness defects in the changed code.
 7. **Regressions** — existing behaviour on the paths the change affects holds.
-8. **Observable behaviour** — what a user sees (API, CLI, output, errors) matches the intent; a silent change is a finding. So is what the change settles in the cases around the intent's own scenario when neither the intent nor `Claims to verify` names it.
+8. **Observable behaviour** — what a user sees (API, CLI, output, errors) matches the intent; a silent change is a finding. So is what the change settles in the cases around the intent's own scenario when the intent does not name it.
 9. **Code quality** — smells in the changed code and between its parts; code that is hard to maintain harms the result too.
 
 Investigate the related scenarios these axes touch. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.

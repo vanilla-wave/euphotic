@@ -16,7 +16,7 @@ Before the loop, once: prove the whole change per `prove` (`../prove/SKILL.md`),
 
 ## Loop
 
-- Review the change per `feature-review` (`../feature-review/SKILL.md`), the proof among its `Claims to verify`.
+- Review the change per `feature-review` (`../feature-review/SKILL.md`).
 - Every change after a pass — yours, or the reviewer's own stray edit or rewritten snapshot — gets a re-pass within the budget.
 - The budget is 3 passes (reviewer launches) unless the user sets another. A failed launch is not a pass.
 - The same blocker survives a fix and a re-pass with no new evidence: change the diagnosis, the approach or the experiment. Spent budget changes neither a blocker's standing nor Done.
