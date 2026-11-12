@@ -11,11 +11,18 @@ Solve the task in one **autonomous** run that ends in a proven, reviewed change.
 
 **User intent** — what the user wants: their goal, constraints and decisions. A spec the user brings is part of it; what you decide on the way is not.
 
-## Stages
+## Routes
 
-Design per `autogrill` (`../autogrill/SKILL.md`) — in a subagent handed only the intent: a walk that sees the build ahead hurries toward it → spec per `to-spec` (`../to-spec/SKILL.md`) → build per `implement` (`../implement/SKILL.md`) → proof and review per `review-loop` (`../review-loop/SKILL.md`) → `overview` (`../overview/SKILL.md`), the intent as its claim.
+By what you were handed:
 
-Start where what you were handed ends. A bug fix or a simple task, where the intent and the code settle what to change, is built per `tdd` (`../tdd/SKILL.md`) with no design, spec or tickets.
+- a task that needs design → `autogrill` (`../autogrill/SKILL.md`) → `to-spec` (`../to-spec/SKILL.md`) → `implement` (`../implement/SKILL.md`)
+- a spec → `implement`
+- a simple task or a bug → your own way
+- work already built → straight to proof and review
+
+Every route ends in proof and review per `review-loop` (`../review-loop/SKILL.md`) → `overview` (`../overview/SKILL.md`), the intent as its claim.
+
+`autogrill` runs in a subagent handed only the intent: a walk that sees the build ahead hurries toward it.
 
 ## No one to ask
 
