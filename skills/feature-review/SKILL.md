@@ -5,7 +5,7 @@ argument-hint: "[scope] (default: the work done in this chat)"
 disable-model-invocation: true
 metadata:
   short-description: Fresh-context review of a feature against the user intent
-  origin: split from review-loop 2026-11-11, which keeps the loop; decision boundary from rifty (user fork); 2026-11-12 Claims to verify dropped, the reviewer gets the intent and pointers to the work, not the author's account
+  origin: split from review-loop 2026-11-11, which keeps the loop; decision boundary from rifty (user fork); 2026-11-12 Claims to verify dropped, the reviewer gets the intent and pointers to the work, not the author's account; a re-pass became a full pass, only answered findings stay closed
 ---
 
 One review pass over the work by a fresh-context reviewer. Read-only: the work is judged here, not fixed.
@@ -19,7 +19,7 @@ One review pass over the work by a fresh-context reviewer. Read-only: the work i
   - `User intent` — in the user's formulations and decisions.
   - `Spec` — the path to the spec, when the work was built from one.
   - `Scope` — where this task's changes live: the paths, refs or commands that reach them (committed, uncommitted and new files alike; unrelated dirty changes stay out), with pointers to the project rules and recorded decisions that apply.
-- A re-pass adds `Previous findings` with their ids and dispositions. It judges the open findings and the code changed since the previous pass, plus the paths that code affects; settled areas reopen only on new evidence.
+- A re-pass is a full pass over the work as it stands, with `Previous findings` — their ids and dispositions — as one more block.
 
 ## Review instruction
 
@@ -36,6 +36,8 @@ You are reviewing work done by another agent. Judge the feature within the Scope
 9. **Code quality** — smells in the changed code and between its parts; code that is hard to maintain harms the result too.
 
 Investigate the related scenarios these axes touch. Where behaviour can be executed, verify by running code — tests, a reproduction, the affected paths — rather than by reading alone. Code-changing experiments belong in a temporary copy.
+
+`Previous findings`, when present, are judged against the code as it stands now: a claimed fix is checked there; a finding answered any other way reopens only on new evidence.
 
 Return numbered findings, each naming its axis — surviving findings keep their ids, new ones get unused ids — and for every axis what was checked and what stayed unchecked. A finding counts as a **blocker** only with all of: a violated requirement or project rule, or a concrete architectural cost; a reachable scenario; its consequence; the evidence. Mark as **should** a material concern or question the evidence does not settle, where being right would noticeably harm the result — and state what answer would settle it. Everything else is a **nit**: it needs no answer, and a reviewer's preference is a nit at most.
 
