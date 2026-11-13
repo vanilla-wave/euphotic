@@ -4,10 +4,10 @@ description: One autonomous run from a task to a proven, reviewed change. Starts
 argument-hint: "[task | spec | built work] (default: the task stated in this chat)"
 disable-model-invocation: true
 metadata:
-  origin: design discussion 2026-11-10/11; 2026-11-12 the report became a short message plus a readable full report, raw output out of both; blocked when the task's own problem is not seen or its cause not found
+  origin: design discussion 2026-11-10/11; 2026-11-12 blocked when the task's own problem is not seen or its cause not found; 2026-11-13 the report opens with what only the run can tell a reader outside it, the rest is its owners' parts as given
 ---
 
-Solve the task in one **autonomous** run that ends in a proven, reviewed change. Nobody answers questions along the way: they reach the user in the report, over work already built on your recommendation. The user reads only the report, often one of a batch, and may know the task only in outline.
+Solve the task in one **autonomous** run that ends in a proven, reviewed change. The user is outside the run: nobody answers questions along the way, and at its end they come to it cold — one task of a batch, no longer in their head. All that reaches them is the **report**; questions go there, over work already built on your recommendation.
 
 **User intent** — what the user wants: their goal, constraints and decisions. A spec the user brings is part of it; what you decide on the way is not.
 
@@ -28,29 +28,30 @@ Every route ends in proof and review per `review-loop` (`../review-loop/SKILL.md
 
 A **decision** is what the change settles for the user that the intent leaves open, whether you weighed it or not: look in what a user sees around the task's scenario. Where a skill would ask, decide — by the intent, then evidence, else **your call**.
 
-- The user would not notice → the full report.
-- Would notice → a **question**: build your recommendation, ask in the final message. A `review-loop` decision point is one; it holds nothing open.
+- The user would not notice → the report, with its reason.
+- Would notice → a **question**: build your recommendation, ask in the report. A `review-loop` decision point is one; it holds nothing open.
 - A "no" would discard the run, or the step cannot be undone → blocked. In doubt, the question.
 
 What the reviewer finds the change settles is a decision too, and goes the same way.
 
 ## Report
 
-The **report** is two texts for that reader, in the user's words for things:
+The **report** is one file, `~/ai/euphotic/overview/<YYYY-MM-DD>-<topic>.md`. It opens with what only the run can tell that reader:
 
-- The final message, told over coffee and no longer than a screen: the task in a line; what waits for the user — the blocker, the questions; what was done and whether it works — what is proven and what is not; every other decision the user would notice; where the work lives. A sentence or two each: the detail is the full report's.
-- The full report, `~/ai/euphotic/overview/<YYYY-MM-DD>-<topic>.md`, linked from the message: the same story for a reader the message left uneasy, at a length still read end to end — how the problem showed and what caused it, what changed, the proof behind each promise, what the review found and what became of it, every decision with its reason, what stayed unchecked, how to read the change.
+- the task as its user met it — what they did, what they expected and what they saw instead, or what they lacked;
+- what waits for the user — the blocker, the questions — each from its situation, what the user does and sees there and why it is theirs to settle, to the options and what each does for the user, or what would unblock the run;
+- where the work stands and where it lives.
 
-A question or a blocker opens with its situation — what the user does and sees there, why it is theirs to settle — then the options and what each does for the user, or what would unblock the run. A bare "A or B?" is for a reader who holds the task; this one gets the scene before the choice.
+Then the parts, each as its owner gave it: `review-loop`'s report — the proof and the review; the decisions the user would not notice; the `overview`. Nothing raw is added: a log, a transcript, the reviewer's reply, a prompt, a patch is neither pasted nor linked.
 
-What `prove`, `review-loop` and `overview` hand back is material, retold: raw output (a log, a transcript, a reviewer's reply, a prompt, a patch) is neither pasted nor linked.
+The final message is that opening, as written, and the link.
 
 ## Done
 
-`review-loop`'s Done holds for the code as it ends, and the report is out: with the message alone the reader can answer every question; with the full report alone, retell the work and start reviewing it.
+`review-loop`'s Done holds for the code as it ends, and the report is out: from the final message alone, a reader who never saw the task can say what it was and where it stands, and answer what waits for them.
 
 ## Blocked
 
 The run is **blocked** by what neither a call nor work of yours settles: something only the user can give; the task's own problem not seen or its cause not found; a `review-loop` that ends not done; an environment that will not recover. An environment problem is investigated first and blocks only on grounds to think it will not clear: a server another session holds is released when that session is done.
 
-Stop there and report the same way, as far as the run got.
+Stop there and report the same way, as far as the run got: a part the run did not reach is absent, and what was tried and seen stands in its place.
