@@ -5,7 +5,7 @@ argument-hint: "[scope] (default: the work already done in this chat)"
 disable-model-invocation: true
 metadata:
   short-description: Prove, review and fix the work until nothing is open
-  origin: design discussion 2026-11-08; loop idea from no-mistakes, decision boundary from rifty (user fork); 2026-11-11 the review pass split out into feature-review, prove added; 2026-11-12 prove moved out of the loop, taken once
+  origin: design discussion 2026-11-08; loop idea from no-mistakes, decision boundary from rifty (user fork); 2026-11-11 the review pass split out into feature-review, prove added; 2026-11-12 prove moved out of the loop, taken once; 2026-11-13 the fresh-context reviewer launch moved back in from feature-review, which keeps the review itself
 ---
 
 Drive the work to proven and reviewed against the user intent. First make sure that what the work was started for is done; only then look at the details.
@@ -14,9 +14,19 @@ Drive the work to proven and reviewed against the user intent. First make sure t
 
 Before the loop, once: prove the whole change per `prove` (`../prove/SKILL.md`), the user intent as its claim. A refuted promise is fixed before any review is spent on it.
 
+## Reviewer
+
+Every pass is a review per `feature-review` (`../feature-review/SKILL.md`) by a fresh-context reviewer.
+
+- Launch a fresh-context full agent through your own CLI, non-interactively, with your model, mode and permissions where the interface lets you set them. The `review-loop` section of `~/ai/euphotic/preferences.md`, if present, overrides the reviewer or model. With no external CLI available: a fresh-context subagent on your model, and tell the user at that moment that the review is downgraded.
+- Pass it the text of `feature-review` verbatim, then these blocks and nothing else of yours — your choices, assumptions, check results and reasoning stay with you:
+  - `User intent` — in the user's formulations and decisions.
+  - `Spec` — the path to the spec, when the work was built from one.
+  - `Scope` — where this task's changes live: the paths, refs or commands that reach them (committed, uncommitted and new files alike; unrelated dirty changes stay out), with pointers to the project rules and recorded decisions that apply.
+- A re-pass is a full pass over the work as it stands, with `Previous findings` — their ids and dispositions — as one more block.
+
 ## Loop
 
-- Review the change per `feature-review` (`../feature-review/SKILL.md`).
 - Every change after a pass — yours, or the reviewer's own stray edit or rewritten snapshot — gets a re-pass within the budget.
 - The budget is 3 passes (reviewer launches) unless the user sets another. A failed launch is not a pass.
 - The same blocker survives a fix and a re-pass with no new evidence: change the diagnosis, the approach or the experiment. Spent budget changes neither a blocker's standing nor Done.
