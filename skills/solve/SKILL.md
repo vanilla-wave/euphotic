@@ -4,7 +4,7 @@ description: One autonomous run from a task to a proven, reviewed change. Starts
 argument-hint: "[task | spec | built work] (default: the task stated in this chat)"
 disable-model-invocation: true
 metadata:
-  origin: design discussion 2026-11-10/11; 2026-11-12 blocked when the task's own problem is not seen or its cause not found; 2026-11-13 the report opens with what only the run can tell a reader outside it, the rest is its owners' parts as given
+  origin: design discussion 2026-11-10/11; 2026-11-12 blocked when the task's own problem is not seen or its cause not found; 2026-11-13 the report opens with what only the run can tell a reader outside it, the rest is its owners' parts as given; 2026-11-17 the state by prove's verdicts, a blocker as a choice to unblock or close
 ---
 
 Solve the task in one **autonomous** run that ends in a proven, reviewed change. The user is outside the run: nobody answers questions along the way, and at its end they come to it cold — one task of a batch, no longer in their head. All that reaches them is the **report**; questions go there, over work already built on your recommendation.
@@ -36,11 +36,11 @@ What the reviewer finds the change settles is a decision too, and goes the same 
 
 ## Report
 
-The **report** is one file, `~/ai/euphotic/overview/<YYYY-MM-DD>-<topic>.md`. It opens with what only the run can tell that reader:
+The **report** is one file, `~/ai/euphotic/overview/<YYYY-MM-DD>-<topic>.md`. It opens with what only the run can tell that reader, in the user's words for things:
 
 - the task as its user met it — what they did, what they expected and what they saw instead, or what they lacked;
-- what waits for the user — the blocker, the questions — each from its situation, what the user does and sees there and why it is theirs to settle, to the options and what each does for the user, or what would unblock the run;
-- where the work stands and where it lives.
+- what waits for the user — the blocker, the questions — each from its situation, what the user does and sees there and why it is theirs to settle, to the options and what each does for the user;
+- where the work stands, by `prove`'s verdicts — what is proven, what is refuted, what stayed unproven — and where it lives.
 
 Then the parts, each as its owner gave it: `review-loop`'s report — the proof and the review; the decisions the user would not notice; the `overview`. Nothing raw is added: a log, a transcript, the reviewer's reply, a prompt, a patch is neither pasted nor linked.
 
@@ -54,4 +54,4 @@ The final message is that opening, as written, and the link.
 
 The run is **blocked** by what neither a call nor work of yours settles: something only the user can give; the task's own problem not seen or its cause not found; a `review-loop` that ends not done; an environment that will not recover. An environment problem is investigated first and blocks only on grounds to think it will not clear: a server another session holds is released when that session is done.
 
-Stop there and report the same way, as far as the run got: a part the run did not reach is absent, and what was tried and seen stands in its place.
+Stop there and report the same way, as far as the run got. The blocker reaches the user as a choice: get what would unblock the run — what exactly, from whom — or close the task.
