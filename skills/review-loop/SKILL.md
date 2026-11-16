@@ -5,7 +5,7 @@ argument-hint: "[scope] (default: the work already done in this chat)"
 disable-model-invocation: true
 metadata:
   short-description: Prove, review and fix the work until nothing is open
-  origin: design discussion 2026-11-08; loop idea from no-mistakes, decision boundary from rifty (user fork); 2026-11-11 the review pass split out into feature-review, prove added; 2026-11-12 prove moved out of the loop, taken once; 2026-11-13 the fresh-context reviewer launch moved back in from feature-review, which keeps the review itself
+  origin: design discussion 2026-11-08; loop idea from no-mistakes, decision boundary from rifty (user fork); 2026-11-11 the review pass split out into feature-review, prove added; 2026-11-12 prove moved out of the loop, taken once; 2026-11-13 the fresh-context reviewer launch moved back in from feature-review, which keeps the review itself; 2026-11-16 Previous findings and the nit rule moved in from feature-review, the report gives the state of the work instead of the review by axis
 ---
 
 Drive the work to proven and reviewed against the user intent. First make sure that what the work was started for is done; only then look at the details.
@@ -23,7 +23,7 @@ Every pass is a review per `feature-review` (`../feature-review/SKILL.md`) by a 
   - `User intent` — in the user's formulations and decisions.
   - `Spec` — the path to the spec, when the work was built from one.
   - `Scope` — where this task's changes live: the paths, refs or commands that reach them (committed, uncommitted and new files alike; unrelated dirty changes stay out), with pointers to the project rules and recorded decisions that apply.
-- A re-pass is a full pass over the work as it stands, with `Previous findings` — their ids and dispositions — as one more block.
+- A re-pass is a full pass over the work as it stands, with one more block: `Previous findings` — their ids and dispositions, judged against the code as it stands now. A claimed fix is checked there; a finding answered any other way reopens only on new evidence. Surviving findings keep their ids, new ones get unused ids.
 
 ## Loop
 
@@ -34,7 +34,7 @@ Every pass is a review per `feature-review` (`../feature-review/SKILL.md`) by a 
 ## Answering the findings
 
 - Fixes and their method are yours; the reviewer's suggested fix is advisory. Stay inside the agreed scope: old debt that does not block this result adds no work.
-- Reject a blocker with counter-evidence. Answer every should: fix it, disprove it, promote it to a blocker, or defer it with a reason for the report. Judge labels by the criteria, not by how a finding arrived. Rarity of a scenario or smallness of cost alone does not cancel a proven violation of a requirement. There is no arbiter: a disagreement over a blocker that evidence leaves open goes into the report as unresolved.
+- Reject a blocker with counter-evidence. Answer every should: fix it, disprove it, promote it to a blocker, or defer it with a reason for the report. A nit needs no answer. Judge labels by the criteria, not by how a finding arrived. Rarity of a scenario or smallness of cost alone does not cancel a proven violation of a requirement. There is no arbiter: a disagreement over a blocker that evidence leaves open goes into the report as unresolved.
 - Ask the user only at a real decision point: a reachable scenario, options with materially different outcomes for the user, and a choice the intent, answers and accepted decisions leave open. Present the scenario, the outcomes and your recommendation. Independent work continues; the dependent choice waits for the answer.
 - A finding is closed by a pass over the actual code: a "fixed" claim or a green test alone closes nothing.
 
@@ -42,4 +42,4 @@ Every pass is a review per `feature-review` (`../feature-review/SKILL.md`) by a 
 
 Every load-bearing promise was proven before review, or carries the reason it could not be. For the code as it ends: every blocker is fixed and verified against the actual code, or rejected with evidence; every should is answered or deferred with a reason.
 
-The report gives the proof as taken before review, then the review axis by axis — the checks and their results, the findings with their dispositions, what stayed unchecked — and names every rejected blocker and every deferred should. A blocker awaiting the user's answer, or an unsettled disagreement over a blocker, means not done: report the task as blocked on exactly that. If the budget runs out before the latest changes are reviewed, the result stays unverified and the work is not done.
+The report gives the state of the work to a reader who saw neither the proof nor the review: the proof as taken before review; what the review changed in the work; what stays open — every rejected blocker with its counter-evidence, every deferred should with its reason, what stayed unchecked. A blocker awaiting the user's answer, or an unsettled disagreement over a blocker, means not done: report the task as blocked on exactly that. If the budget runs out before the latest changes are reviewed, the result stays unverified and the work is not done.
