@@ -1,6 +1,6 @@
 ---
 name: vanilla-text
-description: vanilla-wave's style for any text — a recap, a report, an explanation. Use when the author asks for a text "in my style".
+description: vanilla-wave's style for human-readable text — a recap, a report, an explanation. Use when the author asks for a human-readable text or a text "in my style".
 ---
 
 # vanilla-text
