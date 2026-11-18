@@ -20,8 +20,6 @@ short "what bothers me" list, honest even when the answer is unflattering:
 
 - **Contradictions** between a text and the principles it claims - a thin-process doc that reads
   like a rulebook, a skill that scripts what it says it leaves to the agent.
-- **Your own additions** - a threshold, a sentence, a default the user did not ask for. Name it so
-  it can be removed.
 - **Borrowed wording** - say where it came from (a doc, a reference repo) when it was copied
   rather than derived; it may carry assumptions that do not hold here.
 - **What is unverified** - a claim not checked, a skill rewritten but never run.
