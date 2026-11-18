@@ -52,6 +52,6 @@ The final message is that opening, as written, and the link.
 
 ## Blocked
 
-The run is **blocked** by what neither a call nor work of yours settles: something only the user can give; the task's own problem not seen or its cause not found; a `review-loop` that ends not done; an environment that will not recover. An environment problem is investigated first and blocks only on grounds to think it will not clear: a server another session holds is released when that session is done.
+The run is **blocked** when the work cannot reach Done without the user: something only they can give; the task's own problem not seen or its cause not found; a `review-loop` that ends not done; an environment that will not recover. An environment problem is investigated first and blocks only on grounds to think it will not clear: a server another session holds is released when that session is done.
 
 Stop there and report the same way, as far as the run got. The blocker reaches the user as a choice: get what would unblock the run — what exactly, from whom — or close the task.
